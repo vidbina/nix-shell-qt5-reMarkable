@@ -17,6 +17,8 @@ pkgs.mkShell {
   # https://remarkablewiki.com/devel/qt_creator#toolchain
   TOOLCHAIN_BASE_PATH = "${pkgs.remarkable-toolchain}";
   TOOLCHAIN_SDK_PATH = "${pkgs.remarkable-toolchain}/sysroots/x86_64-oesdk-linux";
+  TOOLCHAIN_VERSION = pkgs.remarkable-toolchain.version;
+
   # TODO: TOOLCHAIN_VERSION = pkgs.remarkable-toolchain.version;
   GNUEABI_PATH = "${pkgs.remarkable-toolchain}/sysroots/x86_64-oesdk-linux/usr/bin/arm-oe-linux-gnueabi";
 
