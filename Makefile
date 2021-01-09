@@ -22,10 +22,10 @@ shell:
 # https://embeddeduse.com/2020/11/21/cross-compiling-qt-embedded-applications-with-qtcreator-and-cmake/
 # https://code.qt.io/cgit/yocto/meta-boot2qt.git/tree/meta-boot2qt/files/configure-qtcreator.sh
 
-$(QT_SETTINGS_PATH):
+$(realpath $(QT_SETTINGS_PATH)):
 	$(MKDIR) $@
 
-qtcreator: $(QT_SETTINGS_PATH)
+qtcreator: $(realpath $(QT_SETTINGS_PATH))
 	$(QTCREATOR) \
 		-notour \
 		-settingspath $(realpath $(QT_SETTINGS_PATH)) \
@@ -36,7 +36,7 @@ add: add-compiler add-debugger add-qt-version add-qt-kit
 rm: rm-qt-kit rm-qt-version rm-compiler rm-debugger
 
 # Add to QtCreatorQtVersions in qtversion.xml
-add-qt-version: $(QT_SETTINGS_PATH)
+add-qt-version: $(realpath $(QT_SETTINGS_PATH))
 	$(SDKTOOL) --sdkpath=$(QT_SDK_PATH) addQt \
 		--id "SDK.$(BASE_ID).qt" \
 		--name "Qt %{Qt:Version} (reMarkable toolchain $(TOOLCHAIN_VERSION))" \
