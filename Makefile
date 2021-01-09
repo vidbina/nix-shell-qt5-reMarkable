@@ -2,13 +2,13 @@ SHELL = /usr/bin/env bash
 
 NIXPKGS_PATH ?= ~/nixpkgs
 
-SDKTOOL ?= sdktool
-MKDIR ?= mkdir -p
-QTCREATOR ?= qtcreator
-
 BASE_ID ?= com.example.nix-remarkable
 QT_SETTINGS_PATH ?= /tmp/sdkpath
 QT_SDK_PATH = $(QT_SETTINGS_PATH)/QtProject/qtcreator
+
+SDKTOOL ?= sdktool
+MKDIR ?= mkdir -p
+QTCREATOR ?= qtcreator
 
 -include project.mk
 
