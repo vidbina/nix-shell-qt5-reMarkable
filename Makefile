@@ -3,7 +3,7 @@ SHELL = /usr/bin/env bash
 NIXPKGS_PATH ?= ~/nixpkgs
 
 BASE_ID ?= com.example.nix-remarkable
-QT_SETTINGS_PATH ?= /tmp/sdkpath
+QT_SETTINGS_PATH ?= ./.systemdir
 QT_SDK_PATH = $(QT_SETTINGS_PATH)/QtProject/qtcreator
 
 SDKTOOL ?= sdktool
