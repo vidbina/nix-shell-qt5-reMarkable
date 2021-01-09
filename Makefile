@@ -86,6 +86,7 @@ add-qt-kit:
 		--name "Profile (reMarkable toolchain $(TOOLCHAIN_VERSION))" \
 		--debuggerid $(BASE_ID).gdb \
 		--devicetype "GenericLinuxOsType" \
+		--sysroot "$(TOOLCHAIN_SDK_PATH)" \
 		--Ctoolchain "ProjectExplorer.ToolChain.Gcc:$(BASE_ID).gcc" \
 		--Cxxtoolchain "ProjectExplorer.ToolChain.Gcc:$(BASE_ID).g++" \
 		--qt "SDK.$(BASE_ID).qt"
