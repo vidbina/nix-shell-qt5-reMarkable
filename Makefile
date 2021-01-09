@@ -36,7 +36,7 @@ qtcreator: $(realpath $(QT_SETTINGS_PATH))
 		-theme dark
 
 # Add to QtCreatorQtVersions in qtversion.xml
-add-qt-version: $(realpath $(QT_SETTINGS_PATH))
+add-qt-version:
 	$(SDKTOOL) --sdkpath=$(QT_SDK_PATH) addQt \
 		--id "SDK.$(BASE_ID).qt" \
 		--name "Qt %{Qt:Version} (reMarkable toolchain $(TOOLCHAIN_VERSION))" \
