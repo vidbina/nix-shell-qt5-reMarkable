@@ -50,6 +50,8 @@ pkgs.mkShell {
   shellHook = ''
     export HOME=$PWD/.homedir
 
+    alias qtcreator='qtcreator -theme dark -notour'
+
     source .bashrc
   '';
 }
