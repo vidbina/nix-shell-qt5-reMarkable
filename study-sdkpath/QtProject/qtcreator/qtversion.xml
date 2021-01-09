@@ -1,7 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorQtVersions>
-<!-- Written by QtCreator 4.11.0, 2021-01-09T17:09:52. -->
+<!-- Written by sdktool , 2021-01-09T17:16:43. -->
 <qtcreator>
+ <data>
+  <variable>QtVersion.0</variable>
+  <valuemap type="QVariantMap">
+   <valuelist type="QVariantList" key="Abis">
+    <value type="QString">arm-linux-generic-elf-32bit</value>
+   </valuelist>
+   <value type="int" key="Id">-1</value>
+   <value type="QString" key="Name">Qt %{Qt:Version} (reMarkable toolchain 1.8-23.9.2019)</value>
+   <value type="QString" key="QMakePath">/nix/store/9qayj0jp9chyr63vps54bszflbcmi620-remarkable-toolchain-1.8-23.9.2019/sysroots/x86_64-oesdk-linux/usr/bin/qmake</value>
+   <value type="QString" key="QtVersion.Type">Qt4ProjectManager.QtVersion.Desktop</value>
+   <value type="QString" key="autodetectionSource">SDK.com.example.nix-remarkable.qt</value>
+   <value type="bool" key="isAutodetected">true</value>
+  </valuemap>
+ </data>
  <data>
   <variable>Version</variable>
   <value type="int">1</value>
