@@ -12,9 +12,9 @@ QTCREATOR ?= qtcreator
 
 -include project.mk
 
-all: add-compiler add-debugger add-qt-version add-qt-kit
+all: add-compiler add-debugger add-qt-version add-device add-qt-kit
 
-clean: rm-qt-kit rm-qt-version rm-compiler rm-debugger
+clean: rm-qt-kit rm-device rm-qt-version rm-compiler rm-debugger
 
 # remarkable-toolchain is broken, hence the NIXPKGS_ALLOW_BROKEN=1
 shell:
@@ -36,7 +36,7 @@ qtcreator: $(realpath $(QT_SETTINGS_PATH))
 		-theme dark
 
 # Add to QtCreatorQtVersions in qtversion.xml
-add-qt-version: $(realpath $(QT_SETTINGS_PATH))
+add-qt-version:
 	$(SDKTOOL) --sdkpath=$(QT_SDK_PATH) addQt \
 		--id "SDK.$(BASE_ID).qt" \
 		--name "Qt %{Qt:Version} (reMarkable toolchain $(TOOLCHAIN_VERSION))" \
@@ -86,18 +86,29 @@ add-qt-kit:
 		--name "Profile (reMarkable toolchain $(TOOLCHAIN_VERSION))" \
 		--debuggerid $(BASE_ID).gdb \
 		--devicetype "GenericLinuxOsType" \
+		--sysroot "$(TOOLCHAIN_SDK_PATH)" \
 		--Ctoolchain "ProjectExplorer.ToolChain.Gcc:$(BASE_ID).gcc" \
 		--Cxxtoolchain "ProjectExplorer.ToolChain.Gcc:$(BASE_ID).g++" \
 		--qt "SDK.$(BASE_ID).qt"
 
-#\
-#		--cmake-config "CMAKE_TOOLCHAIN_FILE:FILEPATH=$()"
-#		--cmake-config "CMAKE_MAKE_PROGRAM:FILEPATH=$()"
-#		--cmake-config "CMAKE_CXX_COMPILER:FILEPATH=$(GNUEABI_PATH)/arm-oe-linux-gnueabi-gcc"
-#		--cmake-config "CMAKE_C_COMPILER:FILEPATH=$(GNUEABI_PATH)/arm-oe-linux-gnueabi-gcc"
-
 rm-qt-kit:
 	$(SDKTOOL) --sdkpath=$(QT_SDK_PATH) rmKit --id $(BASE_ID).kit
+
+add-device:
+	$(SDKTOOL) --sdkpath=$(QT_SDK_PATH) addDev \
+		--id $(BASE_ID).dev \
+		--name "reMarkable (over USB)" \
+		--type 0 \
+		--authentication 1 \
+		--host 10.11.99.1 \
+		--origin 0 \
+		--osType GenericLinuxOsType \
+		--sshPort 22 \
+		--timeout 10 \
+		--uname root
+
+rm-device:
+	$(SDKTOOL) --sdkpath=$(QT_SDK_PATH) rmDev --id $(BASE_ID).dev
 
 .PHONY: all clean shell \
 	add-qt-version rm-qt-version \
