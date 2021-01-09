@@ -19,8 +19,21 @@
   </valuemap>
  </data>
  <data>
+  <variable>DebuggerItem.1</variable>
+  <valuemap type="QVariantMap">
+   <valuelist type="QVariantList" key="Abis">
+    <value type="QString">arm-linux-generic-elf-32bit</value>
+   </valuelist>
+   <value type="bool" key="AutoDetected">true</value>
+   <value type="QString" key="Binary">/nix/store/9qayj0jp9chyr63vps54bszflbcmi620-remarkable-toolchain-1.8-23.9.2019/sysroots/x86_64-oesdk-linux/usr/bin/arm-oe-linux-gnueabi/arm-oe-linux-gnueabi-gdb</value>
+   <value type="QString" key="DisplayName">GDB (reMarkable toolchain 1.8-23.9.2019)</value>
+   <value type="int" key="EngineType">1</value>
+   <value type="QString" key="Id">com.example.nix-remarkable.gdb</value>
+  </valuemap>
+ </data>
+ <data>
   <variable>DebuggerItem.Count</variable>
-  <value type="int">1</value>
+  <value type="int">2</value>
  </data>
  <data>
   <variable>Version</variable>
