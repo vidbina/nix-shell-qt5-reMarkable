@@ -47,7 +47,7 @@ add-qt-version: $(QT_SETTINGS_PATH)
 		--name "Qt %{Qt:Version} (reMarkable toolchain $(TOOLCHAIN_VERSION))" \
 		--qmake $(TOOLCHAIN_SDK_PATH)/usr/bin/qmake \
 		--type "Qt4ProjectManager.QtVersion.Desktop" \
-		--abis arm-linux-generic-elf-32bit \
+		--abis arm-linux-generic-elf-32bit
 	
 rm-qt-version:
 	$(SDKTOOL) --sdkpath=$(QT_SDK_PATH) rmQt --id $(BASE_ID).qt
