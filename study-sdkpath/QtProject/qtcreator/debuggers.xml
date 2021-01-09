@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorDebuggers>
-<!-- Written by QtCreator 4.11.0, 2021-01-08T17:45:58. -->
+<!-- Written by QtCreator 4.11.0, 2021-01-09T17:07:03. -->
 <qtcreator>
  <data>
   <variable>DebuggerItem.0</variable>
@@ -29,6 +29,9 @@
    <value type="QString" key="DisplayName">GDB (reMarkable toolchain 1.8-23.9.2019)</value>
    <value type="int" key="EngineType">1</value>
    <value type="QString" key="Id">com.example.nix-remarkable.gdb</value>
+   <value type="QDateTime" key="LastModified">1970-01-01T01:00:01.000</value>
+   <value type="QString" key="Version">8.0.1</value>
+   <value type="QString" key="WorkingDirectory"></value>
   </valuemap>
  </data>
  <data>
