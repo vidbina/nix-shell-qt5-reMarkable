@@ -90,12 +90,6 @@ add-qt-kit:
 		--Cxxtoolchain "ProjectExplorer.ToolChain.Gcc:$(BASE_ID).g++" \
 		--qt "SDK.$(BASE_ID).qt"
 
-#\
-#		--cmake-config "CMAKE_TOOLCHAIN_FILE:FILEPATH=$()"
-#		--cmake-config "CMAKE_MAKE_PROGRAM:FILEPATH=$()"
-#		--cmake-config "CMAKE_CXX_COMPILER:FILEPATH=$(GNUEABI_PATH)/arm-oe-linux-gnueabi-gcc"
-#		--cmake-config "CMAKE_C_COMPILER:FILEPATH=$(GNUEABI_PATH)/arm-oe-linux-gnueabi-gcc"
-
 rm-qt-kit:
 	$(SDKTOOL) --sdkpath=$(QT_SDK_PATH) rmKit --id $(BASE_ID).kit
 
