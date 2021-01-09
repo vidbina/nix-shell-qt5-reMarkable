@@ -12,6 +12,10 @@ QTCREATOR ?= qtcreator
 
 -include project.mk
 
+all: add-compiler add-debugger add-qt-version add-qt-kit
+
+clean: rm-qt-kit rm-qt-version rm-compiler rm-debugger
+
 # remarkable-toolchain is broken, hence the NIXPKGS_ALLOW_BROKEN=1
 shell:
 	NIXPKGS_ALLOW_BROKEN=1 nix-shell -I nixpkgs=$(shell realpath $(NIXPKGS_PATH))
@@ -30,10 +34,6 @@ qtcreator: $(realpath $(QT_SETTINGS_PATH))
 		-notour \
 		-settingspath $(realpath $(QT_SETTINGS_PATH)) \
 		-theme dark
-
-add: add-compiler add-debugger add-qt-version add-qt-kit
-
-rm: rm-qt-kit rm-qt-version rm-compiler rm-debugger
 
 # Add to QtCreatorQtVersions in qtversion.xml
 add-qt-version: $(realpath $(QT_SETTINGS_PATH))
@@ -99,7 +99,7 @@ add-qt-kit:
 rm-qt-kit:
 	$(SDKTOOL) --sdkpath=$(QT_SDK_PATH) rmKit --id $(BASE_ID).kit
 
-.PHONY: shell \
+.PHONY: all clean shell \
 	add-qt-version rm-qt-version \
 	add-compiler rm-compiler \
 	add-debugger rm-debugger \
