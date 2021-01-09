@@ -39,7 +39,7 @@ rm: rm-qt-version rm-compiler rm-debugger rm-qt-kit
 add-qt-version: $(QT_SETTINGS_PATH)
 	$(SDKTOOL) --sdkpath=$(QT_SDK_PATH) addQt \
 		--id $(BASE_ID).qt \
-		--name "Qt 5.14.2 (reMarkable toolchain $(TOOLCHAIN_VERSION))" \
+		--name "reMarkable toolchain $(TOOLCHAIN_VERSION) Qt" \
 		--qmake $(TOOLCHAIN_SDK_PATH)/usr/bin/qmake \
 		--type "Qt4ProjectManager.QtVersion.Desktop"
 	
