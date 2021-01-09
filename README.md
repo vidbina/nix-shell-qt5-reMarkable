@@ -42,9 +42,12 @@ sdktool addQt \
   isAutodetected bool:false
 ```
 
-From the looks of the [source][git-qtcreator-isautodetected], this error is due
-to the "isAutodetected" key being hardcoded to "true" and thus not settable
-from sdktool.
+From the looks of the [source][git-qtcreator-isautodetected], the error is due
+to the "isAutodetected" key being hardcoded to "true" and thus already existing
+as far as sdktool is concerned.
+
+> Seems like sdktool is designed to set some keys by default and doesn't allow
+> "overriding" of those keys.
 
 [sdktool-bug]: https://bugreports.qt.io/browse/QTCREATORBUG-12707
 [sdktool-example]: https://code.qt.io/cgit/yocto/meta-boot2qt.git/tree/meta-boot2qt/files/configure-qtcreator.sh
