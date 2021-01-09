@@ -43,7 +43,7 @@ rm: rm-qt-kit rm-qt-version rm-compiler rm-debugger
 # Add to QtCreatorQtVersions in qtversion.xml
 add-qt-version: $(QT_SETTINGS_PATH)
 	$(SDKTOOL) --sdkpath=$(QT_SDK_PATH) addQt \
-		--id $(BASE_ID).qt \
+		--id "SDK.$(BASE_ID).qt" \
 		--name "Qt %{Qt:Version} (reMarkable toolchain $(TOOLCHAIN_VERSION))" \
 		--qmake $(TOOLCHAIN_SDK_PATH)/usr/bin/qmake \
 		--type "Qt4ProjectManager.QtVersion.Desktop" \
@@ -90,10 +90,10 @@ add-qt-kit:
 		--id $(BASE_ID).kit \
 		--name "Profile (reMarkable toolchain $(TOOLCHAIN_VERSION))" \
 		--debuggerid $(BASE_ID).gdb \
-		--devicetype GenericLinuxOsType \
-		--Ctoolchain $(BASE_ID).gcc \
-		--Cxxtoolchain $(BASE_ID).g++ \
-		--qt $(BASE_ID).qt
+		--devicetype "GenericLinuxOsType" \
+		--Ctoolchain "ProjectExplorer.ToolChain.Gcc:$(BASE_ID).gcc" \
+		--Cxxtoolchain "ProjectExplorer.ToolChain.Gcc:$(BASE_ID).g++" \
+		--qt "SDK.$(BASE_ID).qt"
 
 #\
 #		--cmake-config "CMAKE_TOOLCHAIN_FILE:FILEPATH=$()"
