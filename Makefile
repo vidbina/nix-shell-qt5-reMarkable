@@ -21,8 +21,6 @@ shell:
 # https://doc.qt.io/qtcreator/creator-targets.html
 # https://embeddeduse.com/2020/11/21/cross-compiling-qt-embedded-applications-with-qtcreator-and-cmake/
 # https://code.qt.io/cgit/yocto/meta-boot2qt.git/tree/meta-boot2qt/files/configure-qtcreator.sh
-kit:
-	$(SDKTOOL) --help
 
 $(QT_SETTINGS_PATH):
 	$(MKDIR) $@
@@ -32,9 +30,6 @@ qtcreator: $(QT_SETTINGS_PATH)
 		-notour \
 		-settingspath $(realpath $(QT_SETTINGS_PATH)) \
 		-theme dark
-
-help:
-	$(SDKTOOL) --help addTC
 
 add: add-compiler add-debugger add-qt-version add-qt-kit
 
