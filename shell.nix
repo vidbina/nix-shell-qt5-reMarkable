@@ -46,7 +46,7 @@ pkgs.mkShell {
     export HOME=$PWD/.homedir
     export PATH=${pkgs.qtcreator}/libexec/qtcreator:$PATH
 
-    alias qtcreator='qtcreator -theme dark -notour'
+    alias qtc="qtcreator -theme dark -notour -installsettingspath $PWD/.systemdir"
 
     source .bashrc
   '';
