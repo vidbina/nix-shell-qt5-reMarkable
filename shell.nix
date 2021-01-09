@@ -17,6 +17,10 @@ pkgs.mkShell {
 
   SDKTOOL = "${pkgs.qtcreator}/libexec/qtcreator/sdktool";
 
+  QT_SCALE_FACTOR = 1;
+  QT_AUTO_SCREEN_SCALE_FACTOR = 0;
+  QT_SCREEN_SCALE_FACTORS = 2;
+
   shellHook = ''
     export HOME=$PWD/.homedir
     export PATH=${pkgs.qtcreator}/libexec/qtcreator:$PATH
