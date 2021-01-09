@@ -32,7 +32,7 @@ $(realpath $(QT_SETTINGS_PATH)):
 qtcreator: $(realpath $(QT_SETTINGS_PATH))
 	$(QTCREATOR) \
 		-notour \
-		-settingspath $(realpath $(QT_SETTINGS_PATH)) \
+		-installsettingspath $(realpath $(QT_SETTINGS_PATH)) \
 		-theme dark
 
 # Add to QtCreatorQtVersions in qtversion.xml
