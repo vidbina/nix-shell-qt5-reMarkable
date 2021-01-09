@@ -10,10 +10,6 @@ pkgs.mkShell {
     remarkable-toolchain
   ];
 
-  #nativeBuildInputs = [ qt.wrapQtAppsHook ];
-
-  POETRY_CACHE_DIR = "./.cache/poetry";
-
   # https://remarkablewiki.com/devel/qt_creator#toolchain
   TOOLCHAIN_BASE_PATH = "${pkgs.remarkable-toolchain}";
   TOOLCHAIN_SDK_PATH = "${pkgs.remarkable-toolchain}/sysroots/x86_64-oesdk-linux";
