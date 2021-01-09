@@ -10,6 +10,8 @@ BASE_ID ?= com.example.nix-remarkable
 QT_SETTINGS_PATH ?= /tmp/sdkpath
 QT_SDK_PATH = $(QT_SETTINGS_PATH)/QtProject/qtcreator
 
+-include project.mk
+
 # remarkable-toolchain is broken, hence the NIXPKGS_ALLOW_BROKEN=1
 shell:
 	NIXPKGS_ALLOW_BROKEN=1 nix-shell -I nixpkgs=$(shell realpath $(NIXPKGS_PATH))
@@ -26,22 +28,26 @@ $(QT_SETTINGS_PATH):
 	$(MKDIR) $@
 
 qtcreator: $(QT_SETTINGS_PATH)
-	$(QTCREATOR) -settingspath $(QT_SETTINGS_PATH)
+	$(QTCREATOR) \
+		-notour \
+		-settingspath $(realpath $(QT_SETTINGS_PATH)) \
+		-theme dark
 
 help:
-	$(SDKTOOL) --help
+	$(SDKTOOL) --help addTC
 
-add: add-qt-version add-compiler add-debugger add-qt-kit
+add: add-compiler add-debugger add-qt-version add-qt-kit
 
-rm: rm-qt-version rm-compiler rm-debugger rm-qt-kit
+rm: rm-qt-kit rm-qt-version rm-compiler rm-debugger
 
 # Add to QtCreatorQtVersions in qtversion.xml
 add-qt-version: $(QT_SETTINGS_PATH)
 	$(SDKTOOL) --sdkpath=$(QT_SDK_PATH) addQt \
 		--id $(BASE_ID).qt \
-		--name "Qt 5.14.2 (reMarkable toolchain $(TOOLCHAIN_VERSION))" \
+		--name "Qt %{Qt:Version} (reMarkable toolchain $(TOOLCHAIN_VERSION))" \
 		--qmake $(TOOLCHAIN_SDK_PATH)/usr/bin/qmake \
-		--type "Qt4ProjectManager.QtVersion.Desktop"
+		--type "Qt4ProjectManager.QtVersion.Desktop" \
+		--abis arm-linux-generic-elf-32bit \
 	
 rm-qt-version:
 	$(SDKTOOL) --sdkpath=$(QT_SDK_PATH) rmQt --id $(BASE_ID).qt
@@ -49,21 +55,21 @@ rm-qt-version:
 # Add to QtCreatorToolChains in toolchains.xml
 add-compiler:
 	$(SDKTOOL) --sdkpath=$(QT_SDK_PATH) addTC \
-		--id $(BASE_ID).gcc \
+		--id "ProjectExplorer.ToolChain.Gcc:$(BASE_ID).gcc" \
 		--language 1 \
 		--name "GCC (C, reMarkable toolchain $(TOOLCHAIN_VERSION))" \
 		--path $(GNUEABI_PATH)/arm-oe-linux-gnueabi-gcc \
 		--abi arm-linux-generic-elf-32bit
 	$(SDKTOOL) --sdkpath=$(QT_SDK_PATH) addTC \
-		--id $(BASE_ID).g++ \
+		--id "ProjectExplorer.ToolChain.Gcc:$(BASE_ID).g++" \
 		--language 2 \
 		--name "GCC (C++, reMarkable toolchain $(TOOLCHAIN_VERSION))" \
 		--path $(GNUEABI_PATH)/arm-oe-linux-gnueabi-gcc \
 		--abi arm-linux-generic-elf-32bit
 
 rm-compiler:
-	$(SDKTOOL) --sdkpath=$(QT_SDK_PATH) rmTC --id $(BASE_ID).gcc
-	$(SDKTOOL) --sdkpath=$(QT_SDK_PATH) rmTC --id $(BASE_ID).g++
+	$(SDKTOOL) --sdkpath=$(QT_SDK_PATH) rmTC --id "ProjectExplorer.ToolChain.Gcc:$(BASE_ID).gcc"
+	$(SDKTOOL) --sdkpath=$(QT_SDK_PATH) rmTC --id "ProjectExplorer.ToolChain.Gcc:$(BASE_ID).g++"
 
 # Add to QtCreatorDebuggers in debuggers.xml
 add-debugger:
