@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProfiles>
-<!-- Written by QtCreator 4.11.0, 2021-01-09T17:22:39. -->
+<!-- Written by QtCreator 4.11.0, 2021-01-09T18:37:44. -->
 <qtcreator>
  <data>
   <variable>Kit.IrrelevantAspects</variable>
@@ -35,7 +35,7 @@
    </valuemap>
    <value type="QString" key="PE.Profile.DeviceTypeForIcon"></value>
    <value type="QString" key="PE.Profile.Icon"></value>
-   <value type="QString" key="PE.Profile.Id">{b802082d-263f-4aa2-abe8-87cd97dad365}</value>
+   <value type="QString" key="PE.Profile.Id">{6df83ad1-b9f5-4465-91b8-456001fb054a}</value>
    <valuelist type="QVariantList" key="PE.Profile.MutableInfo"/>
    <value type="QString" key="PE.Profile.Name">Desktop</value>
    <value type="bool" key="PE.Profile.SDK">false</value>
@@ -48,7 +48,7 @@
  </data>
  <data>
   <variable>Profile.Default</variable>
-  <value type="QString">{b802082d-263f-4aa2-abe8-87cd97dad365}</value>
+  <value type="QString">{6df83ad1-b9f5-4465-91b8-456001fb054a}</value>
  </data>
  <data>
   <variable>Version</variable>
