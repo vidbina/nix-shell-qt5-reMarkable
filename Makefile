@@ -12,9 +12,9 @@ QTCREATOR ?= qtcreator
 
 -include project.mk
 
-all: add-compiler add-debugger add-qt-version add-qt-kit
+all: add-compiler add-debugger add-qt-version add-device add-qt-kit
 
-clean: rm-qt-kit rm-qt-version rm-compiler rm-debugger
+clean: rm-qt-kit rm-device rm-qt-version rm-compiler rm-debugger
 
 # remarkable-toolchain is broken, hence the NIXPKGS_ALLOW_BROKEN=1
 shell:
@@ -93,6 +93,22 @@ add-qt-kit:
 
 rm-qt-kit:
 	$(SDKTOOL) --sdkpath=$(QT_SDK_PATH) rmKit --id $(BASE_ID).kit
+
+add-device:
+	$(SDKTOOL) --sdkpath=$(QT_SDK_PATH) addDev \
+		--id $(BASE_ID).dev \
+		--name "reMarkable (over USB)" \
+		--type 0 \
+		--authentication 1 \
+		--host 10.11.99.1 \
+		--origin 0 \
+		--osType GenericLinuxOsType \
+		--sshPort 22 \
+		--timeout 10 \
+		--uname root
+
+rm-device:
+	$(SDKTOOL) --sdkpath=$(QT_SDK_PATH) rmDev --id $(BASE_ID).dev
 
 .PHONY: all clean shell \
 	add-qt-version rm-qt-version \
