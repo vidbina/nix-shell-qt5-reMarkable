@@ -2,13 +2,19 @@ SHELL = /usr/bin/env bash
 
 NIXPKGS_PATH ?= ~/nixpkgs
 
+BASE_ID ?= com.example.nix-remarkable
+QT_SETTINGS_PATH ?= ./.systemdir
+QT_SDK_PATH = $(QT_SETTINGS_PATH)/QtProject/qtcreator
+
 SDKTOOL ?= sdktool
 MKDIR ?= mkdir -p
 QTCREATOR ?= qtcreator
 
-BASE_ID ?= com.example.nix-remarkable
-QT_SETTINGS_PATH ?= /tmp/sdkpath
-QT_SDK_PATH = $(QT_SETTINGS_PATH)/QtProject/qtcreator
+-include project.mk
+
+all: add-compiler add-debugger add-qt-version add-qt-kit
+
+clean: rm-qt-kit rm-qt-version rm-compiler rm-debugger
 
 # remarkable-toolchain is broken, hence the NIXPKGS_ALLOW_BROKEN=1
 shell:
@@ -19,29 +25,24 @@ shell:
 # https://doc.qt.io/qtcreator/creator-targets.html
 # https://embeddeduse.com/2020/11/21/cross-compiling-qt-embedded-applications-with-qtcreator-and-cmake/
 # https://code.qt.io/cgit/yocto/meta-boot2qt.git/tree/meta-boot2qt/files/configure-qtcreator.sh
-kit:
-	$(SDKTOOL) --help
 
-$(QT_SETTINGS_PATH):
+$(realpath $(QT_SETTINGS_PATH)):
 	$(MKDIR) $@
 
-qtcreator: $(QT_SETTINGS_PATH)
-	$(QTCREATOR) -settingspath $(QT_SETTINGS_PATH)
-
-help:
-	$(SDKTOOL) --help
-
-add: add-qt-version add-compiler add-debugger add-qt-kit
-
-rm: rm-qt-version rm-compiler rm-debugger rm-qt-kit
+qtcreator: $(realpath $(QT_SETTINGS_PATH))
+	$(QTCREATOR) \
+		-notour \
+		-installsettingspath $(realpath $(QT_SETTINGS_PATH)) \
+		-theme dark
 
 # Add to QtCreatorQtVersions in qtversion.xml
-add-qt-version: $(QT_SETTINGS_PATH)
+add-qt-version: $(realpath $(QT_SETTINGS_PATH))
 	$(SDKTOOL) --sdkpath=$(QT_SDK_PATH) addQt \
-		--id $(BASE_ID).qt \
-		--name "Qt 5.14.2 (reMarkable toolchain $(TOOLCHAIN_VERSION))" \
+		--id "SDK.$(BASE_ID).qt" \
+		--name "Qt %{Qt:Version} (reMarkable toolchain $(TOOLCHAIN_VERSION))" \
 		--qmake $(TOOLCHAIN_SDK_PATH)/usr/bin/qmake \
-		--type "Qt4ProjectManager.QtVersion.Desktop"
+		--type "Qt4ProjectManager.QtVersion.Desktop" \
+		--abis arm-linux-generic-elf-32bit
 	
 rm-qt-version:
 	$(SDKTOOL) --sdkpath=$(QT_SDK_PATH) rmQt --id $(BASE_ID).qt
@@ -49,21 +50,21 @@ rm-qt-version:
 # Add to QtCreatorToolChains in toolchains.xml
 add-compiler:
 	$(SDKTOOL) --sdkpath=$(QT_SDK_PATH) addTC \
-		--id $(BASE_ID).gcc \
+		--id "ProjectExplorer.ToolChain.Gcc:$(BASE_ID).gcc" \
 		--language 1 \
 		--name "GCC (C, reMarkable toolchain $(TOOLCHAIN_VERSION))" \
 		--path $(GNUEABI_PATH)/arm-oe-linux-gnueabi-gcc \
 		--abi arm-linux-generic-elf-32bit
 	$(SDKTOOL) --sdkpath=$(QT_SDK_PATH) addTC \
-		--id $(BASE_ID).g++ \
+		--id "ProjectExplorer.ToolChain.Gcc:$(BASE_ID).g++" \
 		--language 2 \
 		--name "GCC (C++, reMarkable toolchain $(TOOLCHAIN_VERSION))" \
 		--path $(GNUEABI_PATH)/arm-oe-linux-gnueabi-gcc \
 		--abi arm-linux-generic-elf-32bit
 
 rm-compiler:
-	$(SDKTOOL) --sdkpath=$(QT_SDK_PATH) rmTC --id $(BASE_ID).gcc
-	$(SDKTOOL) --sdkpath=$(QT_SDK_PATH) rmTC --id $(BASE_ID).g++
+	$(SDKTOOL) --sdkpath=$(QT_SDK_PATH) rmTC --id "ProjectExplorer.ToolChain.Gcc:$(BASE_ID).gcc"
+	$(SDKTOOL) --sdkpath=$(QT_SDK_PATH) rmTC --id "ProjectExplorer.ToolChain.Gcc:$(BASE_ID).g++"
 
 # Add to QtCreatorDebuggers in debuggers.xml
 add-debugger:
@@ -84,10 +85,10 @@ add-qt-kit:
 		--id $(BASE_ID).kit \
 		--name "Profile (reMarkable toolchain $(TOOLCHAIN_VERSION))" \
 		--debuggerid $(BASE_ID).gdb \
-		--devicetype GenericLinuxOsType \
-		--Ctoolchain $(BASE_ID).gcc \
-		--Cxxtoolchain $(BASE_ID).g++ \
-		--qt $(BASE_ID).qt
+		--devicetype "GenericLinuxOsType" \
+		--Ctoolchain "ProjectExplorer.ToolChain.Gcc:$(BASE_ID).gcc" \
+		--Cxxtoolchain "ProjectExplorer.ToolChain.Gcc:$(BASE_ID).g++" \
+		--qt "SDK.$(BASE_ID).qt"
 
 #\
 #		--cmake-config "CMAKE_TOOLCHAIN_FILE:FILEPATH=$()"
@@ -98,7 +99,7 @@ add-qt-kit:
 rm-qt-kit:
 	$(SDKTOOL) --sdkpath=$(QT_SDK_PATH) rmKit --id $(BASE_ID).kit
 
-.PHONY: shell \
+.PHONY: all clean shell \
 	add-qt-version rm-qt-version \
 	add-compiler rm-compiler \
 	add-debugger rm-debugger \

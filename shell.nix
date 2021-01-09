@@ -10,12 +10,7 @@ pkgs.mkShell {
     remarkable-toolchain
   ];
 
-  #nativeBuildInputs = [ qt.wrapQtAppsHook ];
-
-  POETRY_CACHE_DIR = "./.cache/poetry";
-
   # https://remarkablewiki.com/devel/qt_creator#toolchain
-  TOOLCHAIN_BASE_PATH = "${pkgs.remarkable-toolchain}";
   TOOLCHAIN_SDK_PATH = "${pkgs.remarkable-toolchain}/sysroots/x86_64-oesdk-linux";
   TOOLCHAIN_VERSION = pkgs.remarkable-toolchain.version;
 
@@ -48,6 +43,11 @@ pkgs.mkShell {
   #LD_DEBUG = "libs";
 
   shellHook = ''
+    export HOME=$PWD/.homedir
+    export PATH=${pkgs.qtcreator}/libexec/qtcreator:$PATH
+
+    alias qtc="qtcreator -theme dark -notour -installsettingspath $PWD/.systemdir"
+
     source .bashrc
   '';
 }
