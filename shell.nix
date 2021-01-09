@@ -48,6 +48,8 @@ pkgs.mkShell {
   #LD_DEBUG = "libs";
 
   shellHook = ''
+    export HOME=$PWD/.homedir
+
     source .bashrc
   '';
 }
